@@ -19,13 +19,13 @@ const InputSection: React.FC<InputSectionProps> = ({ inputText, onTextChange, on
                 value={inputText}
                 onChange={(e) => onTextChange(e.target.value)}
                 placeholder="Example: 'Climate change is primarily caused by human activities according to 97% of scientists'"
-                className="w-full h-40 p-4 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-slate-200 placeholder-slate-500 resize-none"
+                className="w-full h-40 p-4 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-slate-200 placeholder-slate-400 resize-none"
                 disabled={isLoading}
                 aria-label="Content to analyze"
             />
             <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                    <label htmlFor="analysis-method" className="block text-sm font-medium text-slate-400 mb-1">
+                    <label htmlFor="analysis-method" className="block text-sm font-medium text-slate-300 mb-1">
                         Analysis Method
                     </label>
                     <select

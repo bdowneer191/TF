@@ -89,7 +89,7 @@ const EvidenceTable: React.FC<{ evidence: EvidenceItem[] }> = ({ evidence }) => 
     if (evidence.length === 0) {
         return (
             <div className="bg-slate-800/50 p-6 rounded-2xl text-center">
-                <p className="text-slate-400">No specific evidence was found for this analysis.</p>
+                <p className="text-slate-300">No specific evidence was found for this analysis.</p>
             </div>
         );
     }
@@ -102,13 +102,13 @@ const EvidenceTable: React.FC<{ evidence: EvidenceItem[] }> = ({ evidence }) => 
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
                     placeholder="Filter by quote or publisher..."
-                    className="w-full p-2 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-slate-200 placeholder-slate-500"
+                    className="w-full p-2 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-slate-200 placeholder-slate-400"
                     aria-label="Filter evidence"
                 />
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-slate-300">
-                    <thead className="text-xs text-slate-400 uppercase bg-slate-900/50">
+                    <thead className="text-xs text-slate-300 uppercase bg-slate-900/50">
                         <tr>
                             <th scope="col" className="px-6 py-3">Evidence</th>
                              <th scope="col" className="px-6 py-3 cursor-pointer" onClick={() => handleSort('publisher')}>
@@ -155,7 +155,7 @@ const EvidenceTable: React.FC<{ evidence: EvidenceItem[] }> = ({ evidence }) => 
                                             <ReliabilityBadge score={item.score} />
                                         </td>
                                         <td className="px-2 py-4 text-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 text-slate-400 transition-transform transform ${expandedRowId === item.id ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 text-slate-300 transition-transform transform ${expandedRowId === item.id ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                                             </svg>
                                         </td>
@@ -165,14 +165,14 @@ const EvidenceTable: React.FC<{ evidence: EvidenceItem[] }> = ({ evidence }) => 
                                             <td colSpan={4} className="px-6 py-4">
                                                 <div className="space-y-3 p-4 bg-slate-800/50 rounded-lg">
                                                     <div>
-                                                        <h4 className="text-sm font-semibold text-slate-400 mb-1">Full Quote</h4>
+                                                        <h4 className="text-sm font-semibold text-slate-300 mb-1">Full Quote</h4>
                                                         <p className="text-slate-300 whitespace-pre-wrap">
                                                             <Highlight text={item.quote} highlight={filter} />
                                                         </p>
                                                     </div>
                                                     {item.url && (
                                                         <div>
-                                                            <h4 className="text-sm font-semibold text-slate-400 mb-1">Source URL</h4>
+                                                            <h4 className="text-sm font-semibold text-slate-300 mb-1">Source URL</h4>
                                                             <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline break-all text-sm" onClick={(e) => e.stopPropagation()}>
                                                                 {item.url}
                                                             </a>
@@ -186,7 +186,7 @@ const EvidenceTable: React.FC<{ evidence: EvidenceItem[] }> = ({ evidence }) => 
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={4} className="text-center py-8 px-6 text-slate-400">
+                                <td colSpan={4} className="text-center py-8 px-6 text-slate-300">
                                     No evidence matches your filter.
                                 </td>
                             </tr>

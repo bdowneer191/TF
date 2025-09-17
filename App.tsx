@@ -21,7 +21,7 @@ const LoadingSpinner: React.FC = () => (
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
         <h2 className="mt-4 text-xl font-semibold text-slate-200">Analyzing Content...</h2>
-        <p className="text-slate-400 mt-1">Our AI is running a deep analysis. This may take a moment.</p>
+        <p className="text-slate-300 mt-1">Our AI is running a deep analysis. This may take a moment.</p>
     </div>
 );
 
@@ -121,7 +121,7 @@ const App: React.FC = () => {
         };
     }, []);
 
-    const onExportClick = (format: ExportFormat) => {
+    const onExport = (format: ExportFormat) => {
         if (analysisResult) {
             handleExport(analysisResult, format);
         }
@@ -132,70 +132,57 @@ const App: React.FC = () => {
         if (currentView === 'history') {
             return <HistoryView onSelectReport={handleSelectReport} />;
         }
-
         return (
             <>
-                <header className="mb-8 flex justify-between items-start">
+                <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <h2 className="text-3xl font-bold text-slate-100">Content Fact-Checker</h2>
-                        <p className="text-slate-400 mt-1">Enter any article, claim, or statement to get an instant credibility analysis.</p>
+                        <h2 className="text-3xl font-bold text-slate-100">Fact-Checker Dashboard</h2>
+                        <p className="text-slate-300 mt-1">Analyze content to uncover insights and verify claims.</p>
                     </div>
-
                     {analysisResult && !isLoading && (
                         <div className="relative" ref={exportMenuRef}>
                             <button
                                 onClick={() => setIsExportMenuOpen(prev => !prev)}
-                                className="flex items-center gap-2 px-4 py-2 font-semibold text-slate-300 bg-slate-700/50 rounded-lg hover:bg-slate-600/50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-indigo-500"
+                                className="flex items-center gap-2 px-4 py-2 font-semibold text-slate-200 bg-slate-700/50 rounded-lg hover:bg-slate-600/50 transition-colors"
                                 aria-haspopup="true"
                                 aria-expanded={isExportMenuOpen}
-                                aria-label="Export report"
                             >
                                 <ExportIcon className="w-5 h-5" />
-                                <span className="hidden sm:inline">Export</span>
+                                Export Analysis
                             </button>
                             {isExportMenuOpen && (
                                 <div className="absolute right-0 mt-2 w-56 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-10">
-                                    <ul className="py-1" role="menu">
-                                        <li className="text-xs text-slate-400 px-3 py-1 font-semibold uppercase">Export Options</li>
-                                        <li>
-                                            <button onClick={() => onExportClick('json-full')} className="w-full text-left px-3 py-2 text-sm text-slate-200 hover:bg-slate-700/50 transition-colors" role="menuitem">Full Report (JSON)</button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => onExportClick('json-summary')} className="w-full text-left px-3 py-2 text-sm text-slate-200 hover:bg-slate-700/50 transition-colors" role="menuitem">Summary (JSON)</button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => onExportClick('csv-evidence')} className="w-full text-left px-3 py-2 text-sm text-slate-200 hover:bg-slate-700/50 transition-colors" role="menuitem">Evidence (CSV)</button>
-                                        </li>
-                                    </ul>
+                                    <div className="p-2">
+                                        <p className="px-2 py-1 text-xs font-semibold text-slate-300">Export Options</p>
+                                        <button onClick={() => onExport('json-full')} className="w-full text-left px-2 py-1.5 text-sm text-slate-200 hover:bg-slate-700/80 rounded">Full Report (JSON)</button>
+                                        <button onClick={() => onExport('json-summary')} className="w-full text-left px-2 py-1.5 text-sm text-slate-200 hover:bg-slate-700/80 rounded">Summary (JSON)</button>
+                                        <button onClick={() => onExport('csv-evidence')} className="w-full text-left px-2 py-1.5 text-sm text-slate-200 hover:bg-slate-700/80 rounded">Evidence (CSV)</button>
+                                    </div>
                                 </div>
                             )}
                         </div>
                     )}
                 </header>
-                
-                <InputSection 
+                <InputSection
                     inputText={inputText}
                     onTextChange={setInputText}
                     onAnalyze={handleAnalyze}
                     isLoading={isLoading}
                 />
-                
-                {error && (
-                    <div className="mt-6 bg-red-500/20 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg">
-                        <span className="font-semibold">Error:</span> {error.message}
-                    </div>
-                )}
-
-                <div className="mt-8 min-h-[400px]">
-                    {isLoading ? (
-                        <LoadingSpinner />
-                    ) : analysisResult ? (
-                        <Dashboard result={analysisResult} />
-                    ) : (
-                         <div className="flex flex-col items-center justify-center text-center text-slate-500 pt-16">
-                            <LightBulbIcon className="w-16 h-16 text-slate-600" />
-                            <h3 className="mt-4 text-xl font-semibold text-slate-300">Ready to Verify</h3>
-                            <p className="max-w-sm mt-1">Enter content above to start a comprehensive fact-check with industry-grade verification.</p>
+                <div className="mt-6">
+                    {isLoading && <LoadingSpinner />}
+                    {error && (
+                        <div className="bg-red-500/10 border border-red-500/20 text-red-300 p-4 rounded-lg text-center">
+                            <h3 className="font-semibold">Analysis Failed</h3>
+                            <p className="text-sm">{error.message}</p>
+                        </div>
+                    )}
+                    {analysisResult && <Dashboard result={analysisResult} />}
+                    {!isLoading && !analysisResult && !error && (
+                        <div className="text-center py-10 bg-slate-800/30 rounded-2xl">
+                             <LightBulbIcon className="w-12 h-12 mx-auto text-slate-500" />
+                            <h3 className="mt-4 text-xl font-semibold text-slate-200">Ready for Analysis</h3>
+                            <p className="mt-1 text-slate-300">Enter text above and click "Verify Claims" to begin.</p>
                         </div>
                     )}
                 </div>
@@ -208,16 +195,16 @@ const App: React.FC = () => {
             <Sidebar 
                 onSettingsClick={() => setIsSettingsModalOpen(true)}
                 currentView={currentView}
-                onNavigate={setCurrentView}
+                onNavigate={setCurrentView} 
             />
-            <main className="flex-1 p-6 sm:p-8 lg:p-12 overflow-y-auto">
+            <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
                 <div className="max-w-4xl mx-auto">
                     {renderMainContent()}
                 </div>
             </main>
             <SettingsModal 
-                isOpen={isSettingsModalOpen}
-                onClose={() => setIsSettingsModalOpen(false)}
+                isOpen={isSettingsModalOpen} 
+                onClose={() => setIsSettingsModalOpen(false)} 
             />
         </div>
     );

@@ -23,7 +23,7 @@ const MetricBar: React.FC<{ metric: ScoreMetric }> = ({ metric }) => {
                     style={{ width: `${score}%` }}
                 ></div>
             </div>
-            <p className="text-xs text-slate-400 mt-2">{description}</p>
+            <p className="text-xs text-slate-300 mt-2">{description}</p>
         </div>
     );
 };
@@ -34,7 +34,7 @@ const ScoreBreakdown: React.FC<{ breakdown: ScoreBreakdownType }> = ({ breakdown
         <div className="bg-slate-800/50 p-6 rounded-2xl space-y-6">
             <div>
                 <h3 className="text-lg font-semibold text-slate-100">Score Breakdown</h3>
-                <p className="text-sm text-slate-400 mt-1">
+                <p className="text-sm text-slate-300 mt-1">
                     Formula: <span className="font-mono text-indigo-300">{breakdown.final_score_formula}</span>
                 </p>
             </div>
@@ -44,7 +44,7 @@ const ScoreBreakdown: React.FC<{ breakdown: ScoreBreakdownType }> = ({ breakdown
                 ))}
             </div>
             {breakdown.confidence_intervals && (
-                <div className="text-center text-sm text-slate-400 border-t border-slate-700/50 pt-4">
+                <div className="text-center text-sm text-slate-300 border-t border-slate-700/50 pt-4">
                     Confidence Interval: 
                     <strong className="text-slate-200"> {breakdown.confidence_intervals.lower_bound} - {breakdown.confidence_intervals.upper_bound}</strong>
                 </div>

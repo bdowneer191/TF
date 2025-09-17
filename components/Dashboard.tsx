@@ -42,7 +42,7 @@ const VerdictDisplay: React.FC<VerdictDisplayProps> = ({ verdict, score }) => {
         <div className={`flex-grow p-4 rounded-xl flex items-center gap-4 border ${borderColor} ${bgColor}`}>
             <Icon className={`w-10 h-10 flex-shrink-0 ${textColor}`} />
             <div>
-                <h3 className="text-sm font-semibold text-slate-400">Final Verdict</h3>
+                <h3 className="text-sm font-semibold text-slate-300">Final Verdict</h3>
                 <p className={`text-xl font-bold ${textColor}`}>{verdict}</p>
             </div>
         </div>

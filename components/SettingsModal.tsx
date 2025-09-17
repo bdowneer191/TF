@@ -54,7 +54,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
             <div className="bg-slate-800/50 border border-slate-700 rounded-2xl shadow-xl p-6 w-full max-w-lg m-4 max-h-[90vh] overflow-y-auto">
                 <div className="flex items-start justify-between">
                     <h2 id="modal-title" className="text-xl font-bold text-slate-100">Settings</h2>
-                    <button onClick={onClose} className="text-slate-400 hover:text-slate-200 transition-colors" aria-label="Close settings">
+                    <button onClick={onClose} className="text-slate-300 hover:text-slate-200 transition-colors" aria-label="Close settings">
                         <XCircleIcon className="w-7 h-7" />
                     </button>
                 </div>
@@ -75,14 +75,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                                             value={keys[field.id] || ''}
                                             onChange={(e) => handleInputChange(field.id, e.target.value)}
                                             placeholder={`Enter your ${field.label}`}
-                                            className="w-full p-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-slate-200 placeholder-slate-500"
+                                            className="w-full p-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-slate-200 placeholder-slate-400"
                                         />
                                     </div>
                                 ))}
                             </div>
                         </div>
                     ))}
-                    <p className="mt-4 text-xs text-slate-500 text-center">
+                    <p className="mt-4 text-xs text-slate-400 text-center">
                         Your API keys are stored securely in your browser's local storage and are never sent to our servers.
                     </p>
                 </div>

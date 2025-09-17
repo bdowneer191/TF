@@ -15,7 +15,7 @@ const MethodologyView: React.FC<{ metadata: FactCheckMetadata }> = ({ metadata }
         <div className="bg-slate-800/50 p-6 rounded-2xl space-y-6">
             <div>
                 <h3 className="text-lg font-semibold text-slate-100">Analysis Methodology</h3>
-                <p className="text-sm text-slate-400 mt-1">
+                <p className="text-sm text-slate-300 mt-1">
                     An overview of the process and data used for this fact-check report.
                 </p>
             </div>
@@ -36,15 +36,15 @@ const MethodologyView: React.FC<{ metadata: FactCheckMetadata }> = ({ metadata }
                  <div className="flex justify-around">
                     <div className="text-center">
                         <p className="text-2xl font-bold text-slate-100">{metadata.sources_consulted.total}</p>
-                        <p className="text-xs text-slate-400">Total Sources</p>
+                        <p className="text-xs text-slate-300">Total Sources</p>
                     </div>
                      <div className="text-center">
                         <p className="text-2xl font-bold text-green-400">{metadata.sources_consulted.high_credibility}</p>
-                        <p className="text-xs text-slate-400">High-Credibility</p>
+                        <p className="text-xs text-slate-300">High-Credibility</p>
                     </div>
                      <div className="text-center">
                         <p className="text-2xl font-bold text-red-400">{metadata.sources_consulted.conflicting}</p>
-                        <p className="text-xs text-slate-400">Conflicting</p>
+                        <p className="text-xs text-slate-300">Conflicting</p>
                     </div>
                 </div>
             </InfoCard>

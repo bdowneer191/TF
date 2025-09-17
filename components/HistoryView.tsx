@@ -3,6 +3,7 @@ import { getHistory, clearHistory } from '../services/historyService';
 import { HistoryEntry } from '../types/factCheck';
 import { FactCheckReport } from '../types/factCheck';
 import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon } from './icons';
+import ExportResults from './ExportResults';
 
 interface HistoryViewProps {
     onSelectReport: (report: FactCheckReport, claimText: string) => void;
@@ -37,9 +38,11 @@ const HistoryView: React.FC<HistoryViewProps> = ({ onSelectReport }) => {
         setHistory([]);
     };
 
+    const reportsToExport = history.map(entry => entry.report);
+
     if (history.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center text-center text-slate-500 pt-16">
+            <div className="flex flex-col items-center justify-center text-center text-slate-400 pt-16">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -54,7 +57,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({ onSelectReport }) => {
             <header className="flex items-center justify-between">
                 <div>
                     <h2 className="text-3xl font-bold text-slate-100">Analysis History</h2>
-                    <p className="text-slate-400 mt-1">Review your past fact-checking reports.</p>
+                    <p className="text-slate-300 mt-1">Review your past fact-checking reports.</p>
                 </div>
                 <button
                     onClick={handleClearHistory}
@@ -63,11 +66,14 @@ const HistoryView: React.FC<HistoryViewProps> = ({ onSelectReport }) => {
                     Clear History
                 </button>
             </header>
+
+            <ExportResults results={reportsToExport} />
+
             <div className="bg-slate-800/50 p-4 rounded-2xl space-y-3">
                 {history.map(entry => (
                     <div key={entry.id} className="bg-slate-900/50 p-4 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex-1">
-                            <p className="text-xs text-slate-400">{new Date(entry.timestamp).toLocaleString()}</p>
+                            <p className="text-xs text-slate-300">{new Date(entry.timestamp).toLocaleString()}</p>
                             <p className="font-medium text-slate-200 mt-1 line-clamp-2">"{entry.claimText}"</p>
                             <div className="mt-2">
                                 <ScoreBadge score={entry.report.final_score} verdict={entry.report.final_verdict} />
