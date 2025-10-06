@@ -1,78 +1,60 @@
-const API_KEYS_CONFIG = {
-    gemini: 'gemini_api_key',
-    factCheck: 'fact_check_api_key',
-    search: 'search_api_key',
-    searchId: 'search_id',
-    newsdata: 'newsdata_api_key',
-    serp: 'serp_api_key',
-};
+/**
+ * A simple service to manage and check for the existence of API keys stored in localStorage.
+ * In a real-world application, these might be managed more securely.
+ */
 
-type ApiKeyId = keyof typeof API_KEYS_CONFIG;
-
-// --- Getters with Error Handling ---
-
-function getKeyFromStorage(keyId: ApiKeyId, errorMessage: string): string {
-    const storageKey = API_KEYS_CONFIG[keyId];
-    const apiKey = localStorage.getItem(storageKey);
-    if (!apiKey) {
-        throw new Error(errorMessage);
-    }
-    return apiKey;
-}
-
-export const getGeminiApiKey = (): string => 
-    getKeyFromStorage('gemini', 'Gemini API key not found. Please add it in the Settings panel.');
-
-export const getFactCheckApiKey = (): string =>
-    getKeyFromStorage('factCheck', 'Google Fact Check API key not found. Please add it in Settings.');
-
-export const getSearchApiKey = (): string =>
-    getKeyFromStorage('search', 'Google Search API key not found. Please add it in Settings.');
-    
-export const getSearchId = (): string =>
-    getKeyFromStorage('searchId', 'Google Search ID not found. Please add it in Settings.');
-
-export const getNewsDataApiKey = (): string =>
-    getKeyFromStorage('newsdata', 'newsdata.io API key not found. Please add it in Settings.');
-
-export const getSerpApiKey = (): string =>
-    getKeyFromStorage('serp', 'SERP API key not found. Please add it in Settings.');
-
-
-// --- Bulk Getters/Setters for Settings UI ---
-
-export const getApiKeys = (): Record<string, string> => {
-    const keys: Record<string, string> = {};
-    for (const key in API_KEYS_CONFIG) {
-        const storageKey = API_KEYS_CONFIG[key as ApiKeyId];
-        keys[key] = localStorage.getItem(storageKey) || '';
-    }
-    return keys;
-};
-
-export const setApiKeys = (keys: Record<string, string>): void => {
-    for (const key in keys) {
-        if (API_KEYS_CONFIG[key as ApiKeyId]) {
-            const storageKey = API_KEYS_CONFIG[key as ApiKeyId];
-            localStorage.setItem(storageKey, keys[key]);
-        }
-    }
-};
-
-
-// --- Validation ---
+const VITE_GEMINI_API_KEY = 'VITE_GEMINI_API_KEY';
+const VITE_NEWSDATA_API_KEY = 'VITE_NEWSDATA_API_KEY';
+// Add other keys as needed, e.g., for Serper, Webz.io, etc.
+// const VITE_SERPER_API_KEY = 'VITE_SERPER_API_KEY';
 
 /**
- * Checks if all required API keys are present in local storage.
- * @returns {boolean} True if all keys are provided, false otherwise.
+ * Retrieves all API keys from localStorage.
+ * @returns An object containing the current API keys.
+ */
+export const getApiKeys = (): Record<string, string> => {
+    return {
+        gemini: localStorage.getItem(VITE_GEMINI_API_KEY) || '',
+        newsdata: localStorage.getItem(VITE_NEWSDATA_API_KEY) || '',
+        // serper: localStorage.getItem(VITE_SERPER_API_KEY) || '',
+    };
+};
+
+/**
+ * Saves the provided API keys to localStorage.
+ * @param keys - An object with keys like 'gemini', 'newsdata'.
+ */
+export const saveApiKeys = (keys: Record<string, string>): void => {
+    if (keys.gemini !== undefined) {
+        localStorage.setItem(VITE_GEMINI_API_KEY, keys.gemini);
+    }
+    if (keys.newsdata !== undefined) {
+        localStorage.setItem(VITE_NEWSDATA_API_KEY, keys.newsdata);
+    }
+    // if (keys.serper !== undefined) {
+    //     localStorage.setItem(VITE_SERPER_API_KEY, keys.serper);
+    // }
+    // Announce that keys have been updated
+    window.dispatchEvent(new Event('apiKeysUpdated'));
+};
+
+/**
+ * Checks if all essential API keys are provided.
+ * @returns `true` if all required keys are present, `false` otherwise.
  */
 export const areAllKeysProvided = (): boolean => {
-    for (const key in API_KEYS_CONFIG) {
-        const storageKey = API_KEYS_CONFIG[key as ApiKeyId];
-        if (!localStorage.getItem(storageKey)) {
-            console.warn(`Validation failed: Missing API key for '${key}'`);
-            return false;
-        }
-    }
-    return true;
+    // For this application, Gemini is essential. Newsdata might be optional.
+    const keys = getApiKeys();
+    return !!keys.gemini;
+};
+
+/**
+ * A hook-like function to get a specific API key.
+ * This is not a real React hook but mimics the pattern.
+ * @param serviceName - The name of the service ('gemini', 'newsdata').
+ * @returns The API key for the requested service.
+ */
+export const getApiKey = (serviceName: 'gemini' | 'newsdata'): string | undefined => {
+    const keys = getApiKeys();
+    return keys[serviceName];
 };
